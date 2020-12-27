@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/8869148d37.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../../tailwind.css">
+
+    <title>Quiz App</title>
+</head>
+<body class="min-w-full min-h-screen font-Montserrat">
+    
+    <main class="playground container flex flex-col items-center bg-blueish max-w-full min-h-screen p-4">
+    <section class="player-infos flex justify-center shadow-2xl avatar w-screen md:w-1/4 p-3 border-blue-800 rounded-full" style="background-color:#4055dd;">
+        <figure class="flex items-end">
+            <i class="fas fa-user-ninja text-yellow-400 block text-4xl mr-2 bg-blue-900 p-3 rounded-full"></i>
+            <h2 class="player text-3xl font-semibold text-blue-900">Ahmed</h2>
+        </figure>
+    </section>
+    <section class="level text-white mt-8">
+            <h2 class="text-3xl">Level<span id="level-nm" class="text-yellow-400">1</span></h2>
+    </section>
+
+    <section class="progress mt-8 w-full flex justify-center">
+        <progress id="prog" value="10" max="100" class="w-1/2 md:w-1/4 rounded-3xl h-1.5 shadow-lg"></progress>
+    </section>
+
+    <section class="level-index flex w-1/4 text-white mt-8 justify-start">
+        <h3 class="font-bold text-2xl" id="pagination"><span id="current">8</span>/<span id="total">10</span></h3>
+    </section>
+
+    <section class="question">
+
+    </section>
+    </main>
+        
+    <script src="../../bundle.js"></script>
+    
+    <script src="../../bundle.js"></script></body>
+</html>
