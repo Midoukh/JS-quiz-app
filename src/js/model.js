@@ -52,7 +52,7 @@ export async function getData(){
         const quiz = new Quiz(data.id, data.question, data.answers, data.correct_answer)
         elements.quizes.push(quiz)
     })
-    renderData(elements.quizes)
+    renderData(elements.quizes, elements.nextQuiz)
 }
 
 

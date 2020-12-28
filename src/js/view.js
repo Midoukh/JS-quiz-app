@@ -8,18 +8,20 @@ export const elements = {
     numberOfQuizes: document.querySelector('#total'),
     question: document.querySelector('.question'),
     quizNumber: document.querySelector('#current'),
+    progressBar: document.getElementById('prog'),
     currentQuiz: 1,
-    nextQuiz: 0
+    nextQuiz: 0,
+    cach: {}
 }
 
-export function renderData(quizes){
-    const numberOfQuizes = quizes.length;
-    let question = quizes[elements.nextQuiz].question;
+export function renderData(quizes, currentQuiz){
+
+    let question = quizes[currentQuiz].question;
     let answers = [];
     for (let i = 0; i < quizes.length; i++){
         answers.push(quizes[i].answers)
     }
-    let answer = answers[elements.nextQuiz]
+    let answer = answers[currentQuiz]
     
     const quizMarkup = `
     <div class="question w-11/12">
@@ -41,20 +43,39 @@ export function renderData(quizes){
     </section>
     `
     elements.question.innerHTML = quizMarkup;
-    elements.numberOfQuizes.textContent = numberOfQuizes;
-    
-    switchQuiz(elements.question, quizMarkup)
-    fixSyntax();
+    elements.cach.rendered = true
+
+    // switchQuiz(elements.question)
+    fixSyntax(question);
     removeNullResponses();
+   
 
 }
 
-function fixSyntax(){
+// function createQuizMarkUp(quizes){
+
+// }
+
+export function quizDetails(quizes){
+    if (quizes){
+        const numberOfQuizes = quizes.length;
+        elements.numberOfQuizes.textContent = numberOfQuizes;
+        
+    }
+}
+function fixSyntax(question){
     document.querySelectorAll('.answer').forEach(el => {
         if (el.nodeType === 8){
             el.style.display = 'block';
         }
+        if (el.textContent.includes === '<'){
+            el = `*${el}*`
+        }
+        
     })
+    if (question.includes('<script>')){
+        question = `*${question}*`
+    }
 }
 
 function removeNullResponses(){
@@ -65,33 +86,45 @@ function removeNullResponses(){
     })
 }
 
+function handleProgress(progressBar){
+
+    //the initial value of the progress in the bar is 0
+    //we want to increase it by a % each time we finish a question
+    return function(cur){
+        return function(total){
+            progressBar.value = (cur/total)*100        
+        }
+    }
+}
+
 // function checkRightAnswer(){
 
 // }
 
-function switchQuiz(question, nextQuiz){
+// function switchQuiz(){
     
-    document.addEventListener('click', (e) => {
-        
+document.addEventListener('click', (e) => {
+        const total = quizDetails()
+        console.log(total)
         if (e.target.dataset.name === 'next'){
             elements.nextQuiz++
             elements.currentQuiz++
-            question.innerHTML = '';
-            setTimeout(() => {
-                question.innerHTML = nextQuiz
-            }, 500)
+           if (elements.cach.rendered){
+                elements.question.innerHTML = '';
+               renderData(elements.quizes, elements.nextQuiz)
+           }
         }
         else if (e.target.dataset.name === 'skip'){
             elements.nextQuiz++
             elements.currentQuiz++
             question.innerHTML = ''
-            question.innerHTML = nextQuiz
         }
         else {
             return 
         }
         elements.quizNumber.textContent = elements.currentQuiz
-        console.log(elements.nextQuiz)
-    })   
-}
-
+        console.log(elements.nextQuiz, elements.quizes.length)
+        handleProgress(elements.progressBar)(elements.nextQuiz)(elements.quizes.length)
+})   
+// }
+// 
